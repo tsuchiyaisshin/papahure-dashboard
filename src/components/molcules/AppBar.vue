@@ -3,7 +3,7 @@
         <v-container>
             <v-row dense class="mt-n5">
                 <v-col cols="9">
-                    <div style="color: white; font-size: 13px; font-weight: 600;" v-text="date">
+                    <div class="date-text" v-text="date">
                     </div>
                 </v-col>
                 <v-col class="text-right" cols="3">
@@ -12,7 +12,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12">
-                    <div style="color: white; font-size: 24px; font-weight: 600; text-align: center" v-text="text">
+                    <div class="app-bar-text" v-text="text">
                     </div>
                 </v-col>
             </v-row>
@@ -52,5 +52,15 @@
         background-image: url('../../assets/svg/header.svg');
         max-width: 320px;
         min-height: 149px;
+    }
+
+    .date-text {
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .app-bar-text {
+        color: white; font-size: 24px; font-weight: 600; text-align: center
     }
 </style>
