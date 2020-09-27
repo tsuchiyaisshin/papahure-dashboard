@@ -48,6 +48,67 @@
           class="direct-btn"
           style="padding: 25px 60px"
           rounded
+          @click="settings"
+        >
+          決定
+        </v-btn>
+      </div>
+      <div v-if="pageCount === 4" class="text-center">
+        <v-row no-gutters>
+          <v-col cols="4">
+            <v-card
+              :class="
+                selectDifficulty === 1
+                  ? 'difficulty-card-active'
+                  : 'difficulty-card'
+              "
+              rounded
+              @click="setDifficulty(1)"
+            >
+              <div class="difficulty">
+                ビギナー
+              </div>
+              <img src="../../assets/png/papa.png" class="logo" />
+            </v-card>
+          </v-col>
+          <v-col cols="4">
+            <v-card
+              :class="
+                selectDifficulty === 2
+                  ? 'difficulty-card-active'
+                  : 'difficulty-card'
+              "
+              rounded
+              @click="setDifficulty(2)"
+            >
+              <div class="difficulty">
+                アマチュア
+              </div>
+              <img src="../../assets/png/papa-normal.png" class="logo" />
+            </v-card>
+          </v-col>
+          <v-col cols="4">
+            <v-card
+              :class="
+                selectDifficulty === 3
+                  ? 'difficulty-card-active'
+                  : 'difficulty-card'
+              "
+              rounded
+              @click="setDifficulty(3)"
+            >
+              <div class="difficulty">
+                プロ
+              </div>
+              <img src="../../assets/png/papa-dash.png" class="logo" />
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-btn
+          v-if="name !== ''"
+          class="direct-btn"
+          style="padding: 25px 60px"
+          rounded
         >
           決定
         </v-btn>
@@ -71,6 +132,7 @@ export default {
     pageCount: 1,
     papaFlag: false,
     connectHash: undefined,
+    selectDifficulty: 2,
   }),
   mounted() {
     this.generateConnectHash()
@@ -102,6 +164,15 @@ export default {
       }
       this.pageCount = 3
     },
+
+    setDifficulty(num) {
+      this.selectDifficulty = num
+    },
+
+    settings() {
+      this.headerText = '目標を決めよう！'
+      this.pageCount = 4
+    },
   },
 }
 </script>
@@ -115,6 +186,28 @@ export default {
   padding-top: 40px;
   padding-bottom: 40px;
   color: orangered;
+}
+
+.difficulty {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px;
+  white-space: nowrap;
+  text-align: center;
+  color: orangered;
+}
+
+.difficulty-card {
+  margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  opacity: 0.5;
+}
+
+.difficulty-card-active {
+  margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .set-name-text {
