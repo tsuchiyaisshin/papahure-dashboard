@@ -62,6 +62,7 @@
                   ? 'difficulty-card-active'
                   : 'difficulty-card'
               "
+              :ripple="false"
               rounded
               @click="setDifficulty(1)"
             >
@@ -78,6 +79,7 @@
                   ? 'difficulty-card-active'
                   : 'difficulty-card'
               "
+              :ripple="false"
               rounded
               @click="setDifficulty(2)"
             >
@@ -94,6 +96,7 @@
                   ? 'difficulty-card-active'
                   : 'difficulty-card'
               "
+              :ripple="false"
               rounded
               @click="setDifficulty(3)"
             >
@@ -104,11 +107,38 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row no-gutters>
+          <v-card
+            style="text-align: center; margin-top: 20px"
+            width="300"
+            height="120"
+          >
+            <v-col cols="12">
+              <div
+                style="color: orangered; font-size: 18px; margin-top: 10px; margin-bottom: 10px; font-weight: 600;"
+              >
+                3日連続ですると何かが起こるよ
+              </div>
+              <v-row no-gutters>
+                <v-icon style="color: limegreen">
+                  mdi-shoe-print
+                </v-icon>
+                <v-spacer></v-spacer>
+                <div
+                  style="font-weight: 600; font-size: 28px; color: orangered"
+                >
+                  {{ steps }}歩
+                </div>
+              </v-row>
+              <div></div>
+            </v-col>
+          </v-card>
+        </v-row>
         <v-btn
-          v-if="name !== ''"
-          class="direct-btn"
+          class="direct-btn-no-margin-top"
           style="padding: 25px 60px"
           rounded
+          @click="sendReq"
         >
           決定
         </v-btn>
@@ -134,6 +164,17 @@ export default {
     connectHash: undefined,
     selectDifficulty: 2,
   }),
+  computed: {
+    steps() {
+      if (this.selectDifficulty === 2) {
+        return '9000'
+      } else if (this.selectDifficulty === 1) {
+        return '6000'
+      } else {
+        return '12000'
+      }
+    },
+  },
   mounted() {
     this.generateConnectHash()
   },
@@ -172,6 +213,10 @@ export default {
     settings() {
       this.headerText = '目標を決めよう！'
       this.pageCount = 4
+    },
+
+    sendReq() {
+      // TDOO: リクエスト送信
     },
   },
 }
@@ -229,6 +274,15 @@ export default {
   font-size: 32px;
   text-align: center;
   margin-top: 150px;
+  width: 100px;
+  color: orangered;
+}
+
+.direct-btn-no-margin-top {
+  font-weight: 600;
+  font-size: 32px;
+  text-align: center;
+  margin-top: 50px;
   width: 100px;
   color: orangered;
 }
