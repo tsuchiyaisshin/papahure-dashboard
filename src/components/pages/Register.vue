@@ -1,6 +1,5 @@
 <template>
-  <div class="background-svg">
-    <app-bar :text="headerText"></app-bar>
+  <div>
     <v-container>
       <div v-if="pageCount === 1">
         <v-card>
@@ -116,9 +115,8 @@
             <v-col cols="12">
               <div
                 style="color: orangered; font-size: 18px; margin-top: 10px; margin-bottom: 10px; font-weight: 600;"
-              >
-                3日連続ですると何かが起こるよ
-              </div>
+                v-text="selectText"
+              ></div>
               <v-row no-gutters>
                 <v-icon style="color: limegreen">
                   mdi-shoe-print
@@ -148,16 +146,15 @@
 </template>
 
 <script>
-import AppBar from '../molcules/AppBar'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import { hashUtils } from '../../utils/hash'
 
 export default {
   name: 'Register',
-  components: { AppBar, VueQrcode },
+  components: { VueQrcode },
   data: () => ({
-    headerText: '役割を決めよう!',
     nameSelectText: '娘の名前を入力してね!',
+    selectText: '3日連続ですると何かが起こるよ',
     name: '',
     pageCount: 1,
     papaFlag: false,
@@ -176,6 +173,7 @@ export default {
     },
   },
   mounted() {
+    this.$parent.headerText = '役割を決めよう!'
     this.generateConnectHash()
   },
   methods: {
@@ -186,9 +184,9 @@ export default {
 
     setPapaFlag(bool) {
       if (bool) {
-        this.headerText = '娘と連携しよう！'
+        this.$parent.headerText = '娘と連携しよう！'
       } else {
-        this.headerText = 'パパと連携しよう!'
+        this.$parent.headerText = 'パパと連携しよう!'
         this.nameSelectText = 'パパの名前を入力してね！'
       }
       this.papaFlag = bool
@@ -198,9 +196,9 @@ export default {
     hashConnect() {
       // TODO: APIとの通信を叩いて連携する。
       if (this.papaFlag) {
-        this.headerText = '娘の名前'
+        this.$parent.headerText = '娘の名前'
       } else {
-        this.headerText = 'パパの名前'
+        this.$parent.headerText = 'パパの名前'
         this.nameSelectText = 'パパの名前を入力してね！'
       }
       this.pageCount = 3
@@ -211,12 +209,13 @@ export default {
     },
 
     settings() {
-      this.headerText = '目標を決めよう！'
+      this.$parent.headerText = '目標を決めよう！'
       this.pageCount = 4
     },
 
     sendReq() {
       // TDOO: リクエスト送信
+      this.$router.push({ name: 'Main' })
     },
   },
 }

@@ -9,18 +9,31 @@
           <img src="../../assets/svg/icons.svg" class="logo" />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="$route.name !== 'Main'">
         <v-col cols="12">
           <div class="app-bar-text" v-text="text"></div>
         </v-col>
+      </v-row>
+      <v-row v-if="$route.name === 'Main'">
+        <day-count></day-count>
+        <papa-status></papa-status>
+        <walk-count></walk-count>
+        <coin-count class="coin-count"></coin-count>
       </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
+import { dateUtils } from '../../utils/date'
+import DayCount from '../atoms/DayCount'
+import PapaStatus from '../atoms/PapaStatus'
+import WalkCount from '../atoms/WalkCount'
+import CoinCount from '../atoms/CoinCount'
+
 export default {
   name: 'AppBar',
+  components: { CoinCount, WalkCount, PapaStatus, DayCount },
   props: {
     text: {
       type: String,
@@ -35,11 +48,7 @@ export default {
   },
   methods: {
     showClock1() {
-      const nowTime = new Date()
-      const nowHour = nowTime.getHours()
-      const nowMin = nowTime.getMinutes()
-      const msg = nowHour + ':' + nowMin
-      this.date = msg
+      this.date = dateUtils.getTime()
     },
   },
 }
@@ -63,5 +72,11 @@ export default {
   font-size: 24px;
   font-weight: 600;
   text-align: center;
+}
+
+.coin-count {
+  position: absolute;
+  top: 50px;
+  left: 230px;
 }
 </style>
